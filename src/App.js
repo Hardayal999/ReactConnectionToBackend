@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
@@ -36,7 +36,7 @@ function App() {
   //   setLoading(false);
   // }
 
-  async function fetchMoviesHandler() {
+  const fetchMoviesHandler = useCallback(async function () {
     setLoading(true);
     setError(null);
     try {
@@ -60,7 +60,11 @@ function App() {
       setError(error.message);
     }
     setLoading(false);
-  }
+  }, []);
+
+  useEffect(() => {
+    fetchMoviesHandler();
+  }, [fetchMoviesHandler]);
 
   let content = <h1>Please Click the above button!!</h1>;
 
